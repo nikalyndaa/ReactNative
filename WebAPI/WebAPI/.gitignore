@@ -1,0 +1,75 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa]rm/
+[Aa]rm64/
+
+# Visual Studio Code
+.vscode/
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# ASP.NET / .NET
+wwwroot/lib/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Logs
+*.log
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# User-specific configuration
+appsettings.Local.json
+appsettings.Development.Local.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test results
+TestResults/
+coverage/
+*.trx
+
+# Temporary files
+*.tmp
+*.temp
+
+# EF / local database files
+*.db
+*.db-shm
+*.db-wal
+
+# Certificates / HTTPS development certificates
+*.pfx
+*.p12
+
+# Azure
+.azure/
+
+# Docker
+docker-compose.override.yml
