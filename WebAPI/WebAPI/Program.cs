@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Data.Entities;
+using WebAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,13 +12,15 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
 
 builder.Services.AddIdentity<UserEntity, RoleEntity>(options =>
 {
-    options.Password.RequireDigit = true;
+    options.Password.RequireDigit = false;
+    options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireLowercase = false;
     options.Password.RequireUppercase = false;
-    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 1;
 })
-.AddEntityFrameworkStores<ApplicationContext>()
-.AddDefaultTokenProviders();
+    .AddEntityFrameworkStores<ApplicationContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddCors(opt => opt.AddDefaultPolicy(p =>
     p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
@@ -33,33 +36,7 @@ app.UseCors();
 app.UseAuthorization();
 app.MapControllers();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
 
-    var context = services.GetRequiredService<ApplicationContext>();
-    await context.Database.MigrateAsync();
-
-    var userManager = services.GetRequiredService<UserManager<UserEntity>>();
-    var adminEmail = "admin@gmail.com";
-
-    if (await userManager.FindByEmailAsync(adminEmail) == null)
-    {
-        var newAdmin = new UserEntity
-        {
-            UserName = adminEmail,
-            Email = adminEmail,
-            EmailConfirmed = true,
-            FirstName = "Admin",
-            LastName = "System"
-        };
-        var createResult = await userManager.CreateAsync(newAdmin, "123456");
-
-        if (createResult.Succeeded)
-            Console.WriteLine("Тестовий адміністратор успішно створений!");
-        else
-            Console.WriteLine("Помилка: " + string.Join("; ", createResult.Errors.Select(e => e.Description)));
-    }
-}
+await app.SeedData();
 
 app.Run();

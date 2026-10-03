@@ -14,14 +14,13 @@ public class AccountController(UserManager<UserEntity> userManager) : Controller
     {
         var user = await userManager.FindByEmailAsync(model.Email);
 
-        if (user == null || !await userManager.CheckPasswordAsync(user, model.Password))
-            return Unauthorized(new { message = "Невірний email або пароль" });
-
-        return Ok(new
+        if (user != null || await userManager.CheckPasswordAsync(user, model.Password))
         {
-            message = "Вхід успішний",
-            email = user.Email,
-            firstName = user.FirstName
-        });
+            var token = "hello_world";
+            return Ok(new {Token = token});
+        }
+        return Unauthorized(new { message = "Невірний email або пароль" });
+
+        
     }
 }
