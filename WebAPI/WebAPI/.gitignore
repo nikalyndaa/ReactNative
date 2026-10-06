@@ -1,75 +1,51 @@
-# Visual Studio
+# ===== OS =====
+.DS_Store
+Thumbs.db
+
+# ===== IDE =====
+.idea/
 .vs/
-*.user
+.vscode/*
+!.vscode/extensions.json
 *.suo
+*.user
 *.userosscache
 *.sln.docstates
 
-# Build results
-[Bb]in/
-[Oo]bj/
-[Dd]ebug/
-[Rr]elease/
-x64/
-x86/
-[Aa]rm/
-[Aa]rm64/
+# ===== .NET (backDigitalBank) =====
+bin/
+obj/
+out/
+*.pdb
+*.dll
+*.cache
 
-# Visual Studio Code
-.vscode/
+# user secrets / local overrides — keep committed appsettings.json generic,
+# never commit real connection strings or keys
+**/appsettings.*.json
+!**/appsettings.json
+!**/appsettings.*.json.example
+secrets.json
 
-# Rider / JetBrains
-.idea/
-*.sln.iml
+# ===== Node / React (frontDigitalBank) =====
+node_modules/
+dist/
+dist-ssr/
+*.local
 
-# NuGet
-*.nupkg
-*.snupkg
-packages/
-.nuget/
-
-# ASP.NET / .NET
-wwwroot/lib/
-project.lock.json
-project.fragment.lock.json
-artifacts/
-
-# Logs
+# logs
+logs/
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Environment / secrets
+# env files
 .env
 .env.*
 !.env.example
 
-# User-specific configuration
-appsettings.Local.json
-appsettings.Development.Local.json
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Test results
-TestResults/
-coverage/
-*.trx
-
-# Temporary files
-*.tmp
-*.temp
-
-# EF / local database files
-*.db
-*.db-shm
-*.db-wal
-
-# Certificates / HTTPS development certificates
-*.pfx
-*.p12
-
-# Azure
-.azure/
-
-# Docker
-docker-compose.override.yml
+# ===== Claude / editor tooling =====
+.claude/
