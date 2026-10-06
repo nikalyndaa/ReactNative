@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using WebAPI.Data.Entities;
 using WebAPI.Extensions;
 using WebAPI.Interfaces;
@@ -28,11 +29,28 @@ builder.Services.AddCors(opt => opt.AddDefaultPolicy(p =>
     p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
 builder.Services.AddScoped<IJwtTokenService,JwtTokenService>();
-
+builder.Services.AddScoped<IImageService,ImageOptimizationService>();
 
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+try
+{
+    var myImage = builder.Configuration.GetRequiredSection("ImagesDir").Get<string>() ?? "myimages";
+    string path = Path.Combine(Directory.GetCurrentDirectory(), myImage);
+    Directory.CreateDirectory(path); //автоматично стоврить images
+
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(path),
+        RequestPath = $"/{myImage}"
+    });
+}
+catch (Exception ex)
+{
+    Console.WriteLine("ѕомилка запуску" + ex.Message);
+}
 
 app.UseSwagger();
 app.UseSwaggerUI();
