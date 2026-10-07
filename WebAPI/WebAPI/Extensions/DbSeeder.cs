@@ -5,6 +5,7 @@ using WebAPI.Constants;
 using WebAPI.Data.Entities;
 using WebAPI.Models.Seeder;
 using Microsoft.EntityFrameworkCore;
+using WebAPI.Interfaces;
 
 namespace WebAPI.Extensions
 {
@@ -17,6 +18,7 @@ namespace WebAPI.Extensions
             var context = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<RoleEntity>>();
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<UserEntity>>();
+            var imageService = scope.ServiceProvider.GetRequiredService<IImageService>();
 
             context.Database.Migrate();
 
@@ -46,8 +48,9 @@ namespace WebAPI.Extensions
                                 LastName = user.LastName,
                                 Email = user.Email,
                                 UserName = user.Email,
-                                Image = user.Image,
                             };
+                            if (!string.IsNullOrEmpty(user.Image))
+                                entity.Image = await imageService.SaveImageFromUrlAsync(user.Image);
                             var result = await userManager.CreateAsync(entity, user.Password);
                             if (result.Succeeded)
                             {

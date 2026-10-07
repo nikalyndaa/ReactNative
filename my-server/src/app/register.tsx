@@ -100,7 +100,7 @@ export default function RegisterScreen() {
       await tokenStorage.set(token);
          console.log("Login:",data)
 
-      router.replace("/");
+      router.replace("/profile")
     } catch (e) {
       const { general, fields } = parseApiError(e);
       const unmatched: string[] = [];

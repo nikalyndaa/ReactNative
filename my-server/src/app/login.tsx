@@ -1,3 +1,8 @@
+import { authApi } from "@/api/authApi";
+import { LoginSchema } from "@/schemas/LoginSchema";
+import { tokenStorage } from "@/services/tokenStorage";
+import { ILoginType } from "@/types/login/ILoginType";
+import { parseApiError } from "@/utils/parseApiError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useRouter } from "expo-router";
 import { useState } from "react";
@@ -12,11 +17,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { authApi } from "@/api/authApi";
-import { LoginSchema } from "@/schemas/LoginSchema";
-import { tokenStorage } from "@/services/tokenStorage";
-import { ILoginType } from "@/types/login/ILoginType";
-import { parseApiError } from "@/utils/parseApiError";
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -34,6 +34,8 @@ export default function LoginScreen() {
   });
 
   const onSubmit = async (data: ILoginType) => {
+    console.log("Login:", data);
+
     if (loading) return;
     setServerError(null);
     setLoading(true);
@@ -41,9 +43,9 @@ export default function LoginScreen() {
     try {
       const { token } = await authApi.login(data);
       await tokenStorage.set(token);
-      console.log("Login:",data)
+      console.log("Login:", data);
 
-      router.replace("/");
+      router.replace("/profile")
     } catch (e) {
       const { general, fields } = parseApiError(e);
       const unmatched: string[] = [];

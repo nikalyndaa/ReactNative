@@ -2,6 +2,7 @@ import { ILoginType } from "@/types/login/ILoginType";
 import { http } from "./http";
 import { IRegisterType } from "@/types/register/IRegisterType";
 import { ILoginResult } from "@/types/login/ILoginResult";
+import { IProfileType } from "@/types/profile/IProfileType";
 
 export type AuthResponse = { token: string };
 
@@ -27,11 +28,17 @@ export const authApi = {
     return res.data;
   },
 
-   async login(data: ILoginType): Promise<ILoginResult> {
+  async login(data: ILoginType): Promise<ILoginResult> {
     const res = await http.post<ILoginResult>("/account/login", {
       email: data.email.trim(),
       password: data.password,
     });
     return res.data;
   },
+
+  async getProfile(): Promise<IProfileType>{
+    const res = await http.get<IProfileType>("/account/profile")
+    return res.data
+  }
+
 };
