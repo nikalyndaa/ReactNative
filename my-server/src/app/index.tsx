@@ -12,12 +12,12 @@ export default function HomeScreen(){
                 Будь ласка, увійдіть у свій акаунт або зареєструйтеся, щоб продовжити.
                 </Text>
 
-                <Link href="/login" asChild>
+                <Link href="/(auth)/login" asChild>
                     <TouchableOpacity className="w-full bg-blue-600 py-3.5 rounded-xl items-center shadow-sm active:bg-blue-700 mb-4">
                         <Text className="text-white font-semibold text-lg">Увійти</Text>
                     </TouchableOpacity>
                 </Link>
-                <Link href="/register" asChild>
+                <Link href="/(auth)/register" asChild>
                     <TouchableOpacity className="w-full bg-blue-600 py-3.5 rounded-xl items-center shadow-sm active:bg-blue-700 mb-4">
                         <Text className="text-white font-semibold text-lg">зареєструйтеся</Text>
                     </TouchableOpacity>

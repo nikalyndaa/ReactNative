@@ -14,11 +14,13 @@ import { logout } from "@/services/authService";
 import { IProfileType } from "@/types/profile/IProfileType";
 import { confirm } from "@/utils/confirm";
 import { parseApiError } from "@/utils/parseApiError";
+import { useRouter } from "expo-router";
 
 export default function ProfileScreen() {
   const [profile, setProfile] = useState<IProfileType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -109,10 +111,17 @@ export default function ProfileScreen() {
           </View>
 
           <TouchableOpacity
-            className="w-full bg-red-600 py-3.5 rounded-xl items-center active:bg-red-700"
+            className="w-full bg-gray-900 py-4 rounded-2xl items-center justify-center mb-4 shadow-md shadow-gray-300 active:scale-[0.98] active:bg-black"
+            onPress={() => router.push("/(tabs)/tasks")}
+          >
+            <Text className="text-white font-semibold text-lg">Мої задачі</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            className="w-full bg-gray-100 py-4 rounded-2xl items-center justify-center border border-gray-200 active:scale-[0.98] active:bg-gray-200"
             onPress={onLogoutPress}
           >
-            <Text className="text-white font-semibold text-lg">Вийти</Text>
+            <Text className="text-gray-700 font-semibold text-lg">Вийти</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

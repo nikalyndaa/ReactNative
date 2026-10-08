@@ -100,7 +100,7 @@ export default function RegisterScreen() {
       await tokenStorage.set(token);
          console.log("Login:",data)
 
-      router.replace("/profile")
+      router.replace("/(auth)/profile")
     } catch (e) {
       const { general, fields } = parseApiError(e);
       const unmatched: string[] = [];
@@ -282,7 +282,7 @@ export default function RegisterScreen() {
           </TouchableOpacity>
 
           <Link
-            href="/login"
+            href="/(auth)/login"
             className="text-center text-blue-600 font-medium mb-3"
           >
             Вже є акаунт? Увійти
